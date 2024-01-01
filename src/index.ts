@@ -25,7 +25,18 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-  console.log("server connected");
+  socket.on("beginPath", (arg) => {
+    //emiting to all the connections
+    socket.broadcast.emit("beginPath", arg);
+  });
+  socket.on("drawLine", (arg) => {
+    //emiting to all the connections
+    socket.broadcast.emit("drawLine", arg);
+  });
+  socket.on("changeConfig", (arg) => {
+    //emiting to all the connections
+    socket.broadcast.emit("changeConfig", arg);
+  });
   // ...
 });
 
