@@ -7,9 +7,11 @@ import cors from "cors";
 dotenv.config();
 
 const app: Express = express();
+const isDev = app.settings.env === "development";
+const URL = isDev ? "http://localhost:3000/" : "https://scratch-book.vercel.app/"; // Replace with your actual client app URL
 app.use(
   cors({
-    origin: "http://localhost:3000/", // Replace with your actual client app URL
+    origin: URL,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -19,7 +21,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000", // Adjust this to your client app's origin
+    origin: URL, // Adjust this to your client app's origin
     methods: ["GET", "POST"],
   },
 });
